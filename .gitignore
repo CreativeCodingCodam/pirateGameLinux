@@ -35,3 +35,4 @@
 compile_commands.json
 /nvim_cpp_config/
 /bin/
+/obj/
