@@ -1,7 +1,11 @@
 #pragma once
 
 #include "Player.h"
+#include "of3dPrimitives.h"
+#include "ofEasyCam.h"
+#include "ofLight.h"
 #include "ofMain.h"
+#include "ofMaterial.h"
 
 enum GameState {
   none,
@@ -28,7 +32,11 @@ public:
   void dragEvent(ofDragInfo dragInfo);
   void gotMessage(ofMessage msg);
 
-private:
   int gameState;
   Player player;
+
+  ofPlanePrimitive plane;
+  ofEasyCam cam;
+  ofMaterial roadMaterial;
+  ofLight light;
 };

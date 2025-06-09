@@ -1,7 +1,31 @@
 #include "ofApp.h"
+#include "fwd.hpp"
+#include "ofLight.h"
 
 //--------------------------------------------------------------
-void ofApp::setup() { gameState = start; }
+void ofApp::setup() {
+  light.setup();
+  light.setPosition(-100, 200, 100);
+  light.setAmbientColor(ofFloatColor(0.4, 1.0));
+
+  plane.set(10000, 10000);
+  plane.rotateDeg(270, 1, 0, 0);
+  plane.move(0, -49, 0);
+
+  ofFloatColor roadColor(0.7, 0.7);
+  roadMaterial.setAmbientColor(roadColor);
+  roadColor.a = 1.0;
+  roadMaterial.setDiffuseColor(roadColor);
+  roadMaterial.setShininess(0.01);
+
+  // Set our camera up in a nice location to view our awesome car
+  cam.setPosition(-965, 586, -1084);
+  glm::vec3 point;
+  cam.lookAt(point, {0.f, 1.f, 0.f});
+  cam.setFarClip(10000);
+
+  gameState = start;
+}
 
 //--------------------------------------------------------------
 void ofApp::update() {
@@ -19,7 +43,17 @@ void ofApp::draw() {
   if (gameState == start) {
 
   } else if (gameState == game) {
+    ofBackgroundGradient(ofColor(10), ofColor(50));
+
+    ofEnableDepthTest();
+    cam.begin();
+    roadMaterial.begin();
+    plane.draw();
+    roadMaterial.end();
     player.draw();
+    cam.end();
+
+    ofDisableDepthTest();
   } else if (gameState == ending) {
   }
 }
