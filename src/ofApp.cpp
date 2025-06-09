@@ -1,5 +1,6 @@
 #include "ofApp.h"
 #include "fwd.hpp"
+#include "ofAppRunner.h"
 #include "ofLight.h"
 
 //--------------------------------------------------------------
@@ -12,9 +13,8 @@ void ofApp::setup() {
   plane.rotateDeg(270, 1, 0, 0);
   plane.move(0, -49, 0);
 
-  ofFloatColor roadColor(0.7, 0.7);
+  ofFloatColor roadColor(100, 0.7, 200);
   roadMaterial.setAmbientColor(roadColor);
-  roadColor.a = 1.0;
   roadMaterial.setDiffuseColor(roadColor);
   roadMaterial.setShininess(0.01);
 
@@ -77,6 +77,9 @@ void ofApp::keyPressed(int key) {
 
     if (key == OF_KEY_DOWN) {
       player.is_down_pressed = true;
+    }
+    if (key == OF_KEY_ESC) {
+      ofExit();
     }
   }
 }

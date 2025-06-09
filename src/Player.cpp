@@ -14,6 +14,9 @@ void Player::update() {
     pos.y -= 1;
 }
 
-void Player::draw() { ofDrawCircle(pos.x, pos.y, 5); }
+void Player::draw() {
+  ofSetColor(0, 0, 0);
+  ofDrawCircle(pos.x, pos.y, 50);
+}
 
 void Player::calculate_movement() {}
