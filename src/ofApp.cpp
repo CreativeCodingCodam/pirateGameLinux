@@ -18,6 +18,24 @@ void ofApp::setup() {
   roadMaterial.setDiffuseColor(roadColor);
   roadMaterial.setShininess(0.01);
 
+  int width = 100, height = 100;
+  for (int y = 0; y < height; y++) {
+    for (int x = 0; x < width; x++) {
+      mesh.addVertex(ofPoint(x * 20, y * 20, 0)); // make a new vertex
+      mesh.addColor(ofFloatColor(0, 0, 0));       // add a color at that vertex
+    }
+  }
+  for (int y = 0; y < height - 1; y++) {
+    for (int x = 0; x < width - 1; x++) {
+      mesh.addIndex(x + y * width);       // 0
+      mesh.addIndex((x + 1) + y * width); // 1
+      mesh.addIndex(x + (y + 1) * width); // 10
+
+      mesh.addIndex((x + 1) + y * width);       // 1
+      mesh.addIndex((x + 1) + (y + 1) * width); // 11
+      mesh.addIndex(x + (y + 1) * width);       // 10
+    }
+  }
   // Set our camera up in a nice location to view our awesome car
   cam.setPosition(-965, 586, -1084);
   glm::vec3 point;
@@ -47,9 +65,13 @@ void ofApp::draw() {
 
     ofEnableDepthTest();
     cam.begin();
-    roadMaterial.begin();
-    plane.draw();
-    roadMaterial.end();
+    ofPushMatrix();
+    ofRotate(240.0f, 1.0f, 1.0f, 1.0f);
+    mesh.drawWireframe();
+    ofPopMatrix();
+    // roadMaterial.begin();
+    // plane.draw();
+    // roadMaterial.end();
     player.draw();
     cam.end();
 

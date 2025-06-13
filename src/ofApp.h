@@ -35,6 +35,7 @@ public:
   int gameState;
   Player player;
 
+  ofMesh mesh;
   ofPlanePrimitive plane;
   ofEasyCam cam;
   ofMaterial roadMaterial;
