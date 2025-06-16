@@ -2,6 +2,7 @@
 #define PERLINNOISE_H
 
 #include "ofMain.h"
+#include <cstdlib>
 
 class PerlinNoise {
 public:
