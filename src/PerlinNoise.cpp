@@ -1,4 +1,5 @@
 #include "PerlinNoise.h"
+#include <cstdlib>
 
 PerlinNoise::PerlinNoise(int seed, int octaves, float amplitude, float roughness) 
     : seed(seed),  roughness(roughness), octaves(octaves), amplitude(amplitude) 
@@ -37,8 +38,8 @@ float PerlinNoise::getPerlinNoise(int x, int y)
 
 float PerlinNoise::getSmoothNoise(int x, int y)
 {
-    float corners = (getNoise(x - 1, y - 1) + getNoise(x + 1, y - 1) + getNoise(x - 1, y + 1) + getNoise(x + 1, y + 1)) / 16f;
-    float sides = (getNoise(x - 1, y) + getNoise(x + 1, y) + getNoise(x, y - 1) + getNoise(x, y + 1)) / 8f;
+    float corners = (getNoise(x - 1, y - 1) + getNoise(x + 1, y - 1) + getNoise(x - 1, y + 1) + getNoise(x + 1, y + 1)) / 16.0f;
+    float sides = (getNoise(x - 1, y) + getNoise(x + 1, y) + getNoise(x, y - 1) + getNoise(x, y + 1)) / 8.0f;
     float center = getNoise(x, y) / 4.0f;
     return (corners + sides + center);
 }
@@ -46,7 +47,7 @@ float PerlinNoise::getSmoothNoise(int x, int y)
 float PerlinNoise::getNoise(int x, int y)
 {
     srand(x * 49623 + y * 325176 + seed);
-    return ((float)rand());
+    return ((float)rand() / (float)RAND_MAX);
 }
 
 float PerlinNoise::getInterpolatedNoise(float x, float y)
