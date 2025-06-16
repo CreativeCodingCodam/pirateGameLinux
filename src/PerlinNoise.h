@@ -7,11 +7,11 @@ class PerlinNoise {
 public:
     int getSeed();
     float getAmplitude();
-    float getPerlinNoise();
-    float getSmoothNoise();
-    float getNoise();
-    float getInterpolatedNoise();
-    float interpolate();
+    float getPerlinNoise(int x, int y);
+    float getSmoothNoise(int x, int y);
+    float getNoise(int x, int y);
+    float getInterpolatedNoise(float x, float y);
+    float interpolate(float a, float b, float blend);
 
     PerlinNoise(int seed, int octaves, float amplitude, float roughness);
     PerlinNoise(int octaves, float amplitude, float roughness);
