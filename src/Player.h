@@ -1,3 +1,6 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include "ofMain.h"
 
 class Player {
@@ -10,3 +13,5 @@ public:
   void draw();
   void calculate_movement();
 };
+
+#endif

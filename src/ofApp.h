@@ -1,4 +1,5 @@
-#pragma once
+#ifndef OFAPP_H
+#define OFAPP_H
 
 #include "Player.h"
 #include "of3dPrimitives.h"
@@ -41,3 +42,5 @@ public:
   ofMaterial roadMaterial;
   ofLight light;
 };
+
+#endif
