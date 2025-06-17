@@ -11,6 +11,11 @@
 class ShaderProgram
 {
 public:
+    void begin();
+    void end();
+    void setUniformMatrix4f(const std::string &name, glm::mat4 m);
+    void setUniform3f(const std::string &name, glm::vec3 v);
+    void setUniform2f(const std::string &name, glm::vec2 v);
     ShaderProgram(std::filesystem::path vertexFile, std::filesystem::path fragmentFile);
     ShaderProgram(std::filesystem::path vertexFile, std::filesystem::path fragmentFile, std::filesystem::path geometryFile);
 protected:

@@ -3,7 +3,7 @@
 
 #include "Player.h"
 #include "of3dPrimitives.h"
-#include "ofEasyCam.h"
+#include "ofCamera.h"
 #include "ofLight.h"
 #include "ofMain.h"
 #include "ofMaterial.h"
@@ -38,7 +38,7 @@ public:
 
   ofMesh mesh;
   ofPlanePrimitive plane;
-  ofEasyCam cam;
+  ofCamera cam;
   ofMaterial roadMaterial;
   ofLight light;
 };

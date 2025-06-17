@@ -1,23 +1,24 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
-#include "ofEasyCam.h"
+#include "ofCamera.h"
 #include "ofLight.h"
 #include "ofMain.h"
 #include "ofVbo.h"
+
+class TerrainRenderer;
 
 class Terrain 
 {
 public:
     int getVertexCount();
     ofVbo getVbo();
-    void render(ofEasyCam camera, ofLight light);
-    void deleteVbo();
+    void render(ofCamera camera, ofLight light);
     Terrain(ofVbo vbo, int vertexCount, TerrainRenderer renderer);
 private:
     ofVbo vbo;
     int vertexCount;
-    TerrainRenderer renderer;
+    TerrainRenderer *renderer;
 };
 
 #endif // !TERRAIN_H
