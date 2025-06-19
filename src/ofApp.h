@@ -6,6 +6,7 @@
 #include "TerrainGenerator.h"
 #include "of3dPrimitives.h"
 #include "ofCamera.h"
+#include "ofEasyCam.h"
 #include "ofLight.h"
 #include "ofMain.h"
 #include "ofMaterial.h"
@@ -40,10 +41,11 @@ public:
   Player player;
 
   ofMesh mesh;
+  ofMesh waterMesh;
   Terrain terrain;
   BaseTerrainGenerator terrainGenerator;
   ofPlanePrimitive plane;
-  ofCamera cam;
+  ofEasyCam cam;
   ofMaterial roadMaterial;
   ofLight light;
 };

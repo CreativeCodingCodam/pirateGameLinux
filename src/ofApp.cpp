@@ -8,6 +8,7 @@
 #include "ofAppRunner.h"
 #include "ofGraphics.h"
 #include "ofLight.h"
+#include "ofMath.h"
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -25,11 +26,21 @@ void ofApp::setup() {
   roadMaterial.setShininess(0.01);
   ofBackground(99, 187, 204);
 
+  PerlinNoise noise = PerlinNoise(1, 5, 500, 0.10f);
+
   int width = 100, height = 100;
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
-      mesh.addVertex(ofPoint(x * 20, y * 20, 0)); // make a new vertex
-      mesh.addColor(ofFloatColor(0, 0, 0));       // add a color at that vertex
+      mesh.addVertex(ofPoint(x * 5, y * 5, noise.getPerlinNoise(x, y)));
+      mesh.addColor(ofFloatColor(ofNoise(x,y), ofNoise(y,x), ofNoise(x,x)));
+      std::cout << "noise value:" << noise.getPerlinNoise(x, y) << std::endl;
+    }
+  }
+
+  for (int y = 0; y < height; y++) {
+    for (int x = 0; x < width; x++) {
+      waterMesh.addVertex(ofPoint(x * 5, y * 5, 300));
+      waterMesh.addColor(ofFloatColor(0,0,0));
     }
   }
   for (int y = 0; y < height - 1; y++) {
@@ -43,15 +54,25 @@ void ofApp::setup() {
       mesh.addIndex(x + (y + 1) * width);       // 10
     }
   }
+  for (int y = 0; y < height - 1; y++) {
+    for (int x = 0; x < width - 1; x++) {
+      waterMesh.addIndex(x + y * width);       // 0
+      waterMesh.addIndex((x + 1) + y * width); // 1
+      waterMesh.addIndex(x + (y + 1) * width); // 10
+
+      waterMesh.addIndex((x + 1) + y * width);       // 1
+      waterMesh.addIndex((x + 1) + (y + 1) * width); // 11
+      waterMesh.addIndex(x + (y + 1) * width);       // 10
+    }
+  }
   // Set our camera up in a nice location to view our awesome car
-  cam.setPosition(-2000, 586, -1084);
+  cam.setPosition(-150, 150, -800);
   glm::vec3 point;
-  cam.lookAt(point, {0.f, 1.f, 0.f});
+  cam.lookAt(point, {0.0f,1.0f,0.0f});
   cam.setFarClip(10000);
 
   gameState = start;
 
-  PerlinNoise noise = PerlinNoise(3, 10, 0.35f);
 
   // for (int x = 0; x < 10; x++) {
   //   for (int y = 0; y < 10; y++) {
@@ -69,9 +90,9 @@ void ofApp::setup() {
     { 120, 120, 120, 1 },
 	{ 200, 200, 210, 1 } 
   };
-  ColourGenerator colourGen = ColourGenerator(colors, 0.45f);
-  terrainGenerator = BaseTerrainGenerator(noise, colourGen);
-  terrain = terrainGenerator.generateTerrain(100);
+  // ColourGenerator colourGen = ColourGenerator(colors, 0.45f);
+  // terrainGenerator = BaseTerrainGenerator(noise, colourGen);
+  // terrain = terrainGenerator.generateTerrain(10);
 }
 
 //--------------------------------------------------------------
@@ -95,14 +116,16 @@ void ofApp::draw() {
     ofEnableDepthTest();
     cam.begin();
     ofPushMatrix();
-    terrainGenerator.render(terrain, cam, light);
+    // terrainGenerator.render(terrain, cam, light);
     ofRotate(240.0f, 1.0f, 1.0f, 1.0f);
+    waterMesh.drawWireframe();
+    mesh.draw();
     // mesh.drawWireframe();
     ofPopMatrix();
     // roadMaterial.begin();
     // plane.draw();
     // roadMaterial.end();
-    player.draw();
+    // player.draw();
     cam.end();
 
     ofDisableDepthTest();
