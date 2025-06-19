@@ -98,7 +98,7 @@ HsvColor RgbToHsv(RgbColor rgb)
     return (hsv);
 }
 
-Colour interpolateColours(Colour color1, Colour color2, float blend)
+Colour Colour::interpolateColours(Colour color1, Colour color2, float blend)
 {
     double theta = blend * M_PI;
     float f = (float) ((1.0f - cos(theta)) * 0.5f);
