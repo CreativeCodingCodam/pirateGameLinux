@@ -31,6 +31,11 @@ ColourGenerator::ColourGenerator(std::vector<ofFloatColor> biomeColours, float s
 {
 }
 
+ColourGenerator::ColourGenerator()
+:  spread(0), halfSpread(0), part(0), biomeColours(std::vector<ofFloatColor>())
+{
+}
+
 ColourGenerator::~ColourGenerator()
 {
 }

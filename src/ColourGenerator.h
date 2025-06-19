@@ -10,6 +10,7 @@ public:
     std::vector<ofFloatColor> generateColours(std::vector<ofVec3f> heights, float amplitude);
     ofFloatColor calculateColour(float height, float amplitude);
     ColourGenerator(std::vector<ofFloatColor> biomeColours, float spread);
+    ColourGenerator();
     ~ColourGenerator();
 private:
     float spread;

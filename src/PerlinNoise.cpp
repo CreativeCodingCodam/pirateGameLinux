@@ -1,6 +1,11 @@
 #include "PerlinNoise.h"
 #include <cstdlib>
 
+PerlinNoise::PerlinNoise() 
+    : seed(0),  roughness(0), octaves(0), amplitude(0) 
+{
+}
+
 PerlinNoise::PerlinNoise(int seed, int octaves, float amplitude, float roughness) 
     : seed(seed),  roughness(roughness), octaves(octaves), amplitude(amplitude) 
 {

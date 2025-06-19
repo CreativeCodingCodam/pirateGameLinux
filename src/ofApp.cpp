@@ -3,8 +3,10 @@
 #include "PerlinNoise.h"
 #include "TerrainGenerator.h"
 #include "BaseTerrainGenerator.h"
+#include "TerrainRenderer.h"
 #include "fwd.hpp"
 #include "ofAppRunner.h"
+#include "ofGraphics.h"
 #include "ofLight.h"
 
 //--------------------------------------------------------------
@@ -21,6 +23,7 @@ void ofApp::setup() {
   roadMaterial.setAmbientColor(roadColor);
   roadMaterial.setDiffuseColor(roadColor);
   roadMaterial.setShininess(0.01);
+  ofBackground(99, 187, 204);
 
   int width = 100, height = 100;
   for (int y = 0; y < height; y++) {
@@ -41,7 +44,7 @@ void ofApp::setup() {
     }
   }
   // Set our camera up in a nice location to view our awesome car
-  cam.setPosition(-965, 586, -1084);
+  cam.setPosition(-2000, 586, -1084);
   glm::vec3 point;
   cam.lookAt(point, {0.f, 1.f, 0.f});
   cam.setFarClip(10000);
@@ -67,8 +70,8 @@ void ofApp::setup() {
 	{ 200, 200, 210, 1 } 
   };
   ColourGenerator colourGen = ColourGenerator(colors, 0.45f);
-  BaseTerrainGenerator terrainGenerator = BaseTerrainGenerator(noise, colourGen);
-  terrainGenerator.generateTerrain(100);
+  terrainGenerator = BaseTerrainGenerator(noise, colourGen);
+  terrain = terrainGenerator.generateTerrain(100);
 }
 
 //--------------------------------------------------------------
@@ -87,13 +90,14 @@ void ofApp::draw() {
   if (gameState == start) {
 
   } else if (gameState == game) {
-    ofBackgroundGradient(ofColor(10), ofColor(50));
+    ofBackgroundGradient(ofColor(50), ofColor(50));
 
     ofEnableDepthTest();
     cam.begin();
     ofPushMatrix();
+    terrainGenerator.render(terrain, cam, light);
     ofRotate(240.0f, 1.0f, 1.0f, 1.0f);
-    mesh.drawWireframe();
+    // mesh.drawWireframe();
     ofPopMatrix();
     // roadMaterial.begin();
     // plane.draw();

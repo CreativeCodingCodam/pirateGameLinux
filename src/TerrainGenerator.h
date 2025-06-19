@@ -10,6 +10,7 @@ class TerrainGenerator
 {
 public:
     TerrainGenerator(PerlinNoise perlinNoise, ColourGenerator colourGen);
+    TerrainGenerator();
     ~TerrainGenerator();
     Terrain generateTerrain(int gridSize);
     virtual Terrain createTerrain(std::vector<ofVec3f> vertices, std::vector<ofFloatColor> colours) = 0;

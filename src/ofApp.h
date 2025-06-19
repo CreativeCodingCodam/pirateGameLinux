@@ -1,12 +1,15 @@
 #ifndef OFAPP_H
 #define OFAPP_H
 
+#include "BaseTerrainGenerator.h"
 #include "Player.h"
+#include "TerrainGenerator.h"
 #include "of3dPrimitives.h"
 #include "ofCamera.h"
 #include "ofLight.h"
 #include "ofMain.h"
 #include "ofMaterial.h"
+#include "Terrain.h"
 
 enum GameState {
   none,
@@ -37,6 +40,8 @@ public:
   Player player;
 
   ofMesh mesh;
+  Terrain terrain;
+  BaseTerrainGenerator terrainGenerator;
   ofPlanePrimitive plane;
   ofCamera cam;
   ofMaterial roadMaterial;

@@ -6,6 +6,7 @@
 #include "TerrainGenerator.h"
 #include "TerrainRenderer.h"
 #include "fwd.hpp"
+#include "ofCamera.h"
 #include "ofMesh.h"
 #include <filesystem>
 #include <vector>
@@ -13,7 +14,9 @@
 class BaseTerrainGenerator : public TerrainGenerator
 {
 public:
+    void render(Terrain &terrain, ofCamera &cam, ofLight &light);
     BaseTerrainGenerator(PerlinNoise perlinNoise, ColourGenerator colourGen);
+    BaseTerrainGenerator();
     ~BaseTerrainGenerator();
 protected:
     Terrain createTerrain(std::vector<ofVec3f> vertices, std::vector<ofFloatColor> colours) override;

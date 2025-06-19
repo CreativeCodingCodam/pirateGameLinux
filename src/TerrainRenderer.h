@@ -10,10 +10,10 @@ class TerrainRenderer
 {
 public:
     TerrainRenderer(TerrainShader shader, bool usesIndices);
-    void render(Terrain terrain, ofCamera camera, ofLight light);
+    void render(Terrain &terrain, ofCamera &camera, ofLight &light);
     void cleanUp();
-    void prepare(Terrain terrain, ofCamera camera, ofLight light);
-    void finish(Terrain terrain);
+    void prepare(Terrain &terrain, ofCamera &camera, ofLight &light);
+    void finish(Terrain &terrain);
 private:
     TerrainShader shader;
     bool hasIndices;

@@ -9,19 +9,23 @@ TerrainRenderer::TerrainRenderer(TerrainShader shader, bool usesIndices)
 {
 }
 
-void TerrainRenderer::render(Terrain terrain, ofCamera camera, ofLight light)
+void TerrainRenderer::render(Terrain &terrain, ofCamera &camera, ofLight &light)
 {
     prepare(terrain, camera, light);
-    if (hasIndices)
-        terrain.getVbo().drawElements(GL_TRIANGLES, terrain.getVertexCount());
-    else
-        terrain.getVbo().draw(GL_TRIANGLES, 0, terrain.getVertexCount());
+    // if (hasIndices)
+    // {
+    //     std::cout << "here2\n";
+    //     terrain.getVbo().drawElements(GL_TRIANGLES, terrain.getVertexCount() / 2);
+    // }
+    // else
+        
+    terrain.getVbo().draw(GL_TRIANGLES, 0, terrain.getVertexCount());
     finish(terrain);
 }
 
-void TerrainRenderer::prepare(Terrain terrain, ofCamera camera, ofLight light)
+void TerrainRenderer::prepare(Terrain &terrain, ofCamera &camera, ofLight &light)
 {
-    int hex = light.getDiffuseColor().getHex();
+    int hex = light.getAmbientColor().getHex();
     glm::vec3 lightColour(((hex >> 16) & 0xFF), ((hex >> 8) & 0xFF), (hex & 0xFF));
     terrain.getVbo().bind();
     shader.begin();
@@ -31,7 +35,7 @@ void TerrainRenderer::prepare(Terrain terrain, ofCamera camera, ofLight light)
     shader.setUniformMatrix4f("projectionViewMatrix", camera.getModelViewProjectionMatrix());
 }
 
-void TerrainRenderer::finish(Terrain terrain)
+void TerrainRenderer::finish(Terrain &terrain)
 {
     terrain.getVbo().unbind();
     shader.end();

@@ -6,6 +6,11 @@
 #include "ofMesh.h"
 #include <vector>
 
+void BaseTerrainGenerator::render(Terrain &terrain, ofCamera &cam, ofLight &light)
+{
+    renderer.render(terrain, cam, light);
+}
+
 Terrain BaseTerrainGenerator::createTerrain(std::vector<ofVec3f> vertices, std::vector<ofFloatColor> colours)
 { 
     ofVbo vbo;
@@ -15,7 +20,7 @@ Terrain BaseTerrainGenerator::createTerrain(std::vector<ofVec3f> vertices, std::
     //setIndexData
     vbo.setVertexData(vertices.data(), vertices.size(), GL_DYNAMIC_DRAW);
     vbo.setColorData(colours.data(), colours.size(), GL_DYNAMIC_DRAW);
-    return (Terrain(vbo, vertexCount, &renderer));
+    return (Terrain(vbo, vertexCount));
 }
 
 int BaseTerrainGenerator::calculateVertexCount(int vertexLength)
@@ -28,6 +33,11 @@ int BaseTerrainGenerator::calculateVertexCount(int vertexLength)
 
 BaseTerrainGenerator::BaseTerrainGenerator(PerlinNoise perlinNoise, ColourGenerator colourGen)
 : TerrainGenerator(perlinNoise, colourGen), renderer(TerrainShader(vertexShader, fragmentShader), true)
+{
+}
+
+BaseTerrainGenerator::BaseTerrainGenerator()
+: TerrainGenerator(), renderer(TerrainShader(vertexShader, fragmentShader), true)
 {
 }
 

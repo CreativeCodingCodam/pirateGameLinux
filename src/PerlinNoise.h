@@ -16,6 +16,7 @@ public:
 
     PerlinNoise(int seed, int octaves, float amplitude, float roughness);
     PerlinNoise(int octaves, float amplitude, float roughness);
+    PerlinNoise();
 private:
     int seed;
     float roughness;

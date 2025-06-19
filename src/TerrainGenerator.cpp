@@ -28,6 +28,11 @@ TerrainGenerator::TerrainGenerator(PerlinNoise perlinNoise, ColourGenerator colo
 {
 }
 
+TerrainGenerator::TerrainGenerator()
+: perlinNoise(), colourGen()
+{
+}
+
 TerrainGenerator::~TerrainGenerator()
 {
 }
