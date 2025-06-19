@@ -9,22 +9,22 @@
 #include "ofMesh.h"
 #include <filesystem>
 #include <vector>
+
 class BaseTerrainGenerator : public TerrainGenerator
 {
 public:
     BaseTerrainGenerator(PerlinNoise perlinNoise, ColourGenerator colourGen);
     ~BaseTerrainGenerator();
 protected:
-    // Terrain createTerrain(std::vector<std::vector<float>> heights, std::vector<std::vector<Colour>> colours) override;
+    Terrain createTerrain(std::vector<ofVec3f> vertices, std::vector<ofFloatColor> colours) override;
 private:
-    // void setVertexData(ofVbo &vbo, std::vector<glm::vec3>);
-    // void setColorData(ofVbo &vbo, std::vector<ofFloatColor> colors);
-    // int calculateVertexCount(int vertexLength);
-    // ofMesh createMeshData(std::vector<std::vector<float>> heights, std::vector<std::vector<Colour>> colours, int vertexCount);
+    void setVertexData(ofVbo &vbo, std::vector<ofVec3f> vertices);
+    void setColorData(ofVbo &vbo, std::vector<ofFloatColor> colors);
+    void setIndexData(ofVbo &vbo, std::vector<ofFloatColor> colors);
+    int calculateVertexCount(int vertexLength);
     std::filesystem::path vertexShader = "terrainVertex.glsl";
     std::filesystem::path fragmentShader = "terrainFragment.glsl";
     TerrainRenderer renderer;
-    int vertexSizeBytes = 12 + 4 + 4;
 };
 
 #endif // !BASETERRAINGENERATOR_H

@@ -2,24 +2,25 @@
 #include "ColourGenerator.h"
 #include "PerlinNoise.h"
 #include "Terrain.h"
+#include "ofVec3f.h"
 #include <vector>
 
 Terrain TerrainGenerator::generateTerrain(int gridSize)
 {
-    std::vector<std::vector<float>> heights = generateHeights(gridSize, perlinNoise);
-    std::vector<std::vector<Colour>> colours = colourGen.generateColours(heights, perlinNoise.getAmplitude());
-    return (createTerrain(heights, colours));
+    std::vector<ofVec3f> vertices = generateHeights(gridSize, perlinNoise);
+    std::vector<ofFloatColor> colours = colourGen.generateColours(vertices, perlinNoise.getAmplitude());
+    return (createTerrain(vertices, colours));
 }
 
-std::vector<std::vector<float>> TerrainGenerator::generateHeights(int gridSize, PerlinNoise perlinNoise)
+std::vector<ofVec3f> TerrainGenerator::generateHeights(int gridSize, PerlinNoise perlinNoise)
 {
-    std::vector<std::vector<float>> heights(gridSize + 1, std::vector<float>(gridSize + 1, 0));
-    for (int z = 0; z < heights.size(); z++) {
-        for (int x = 0; x < heights[z].size(); x++) {
-            heights[z][x] = perlinNoise.getPerlinNoise(x, z);
+    std::vector<ofVec3f> vertices;
+    for (int y = 0; y < gridSize; y++) {
+        for (int x = 0; x < gridSize; x++) {
+            vertices.push_back(ofVec3f(x * 20, y * 20, perlinNoise.getPerlinNoise(x, y)));
         }
     }
-    return (heights);
+    return (vertices);
 }
 
 TerrainGenerator::TerrainGenerator(PerlinNoise perlinNoise, ColourGenerator colourGen)

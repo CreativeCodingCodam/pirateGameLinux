@@ -1,6 +1,8 @@
 #include "ofApp.h"
 #include "ColourGenerator.h"
 #include "PerlinNoise.h"
+#include "TerrainGenerator.h"
+#include "BaseTerrainGenerator.h"
 #include "fwd.hpp"
 #include "ofAppRunner.h"
 #include "ofLight.h"
@@ -47,7 +49,17 @@ void ofApp::setup() {
   gameState = start;
 
   PerlinNoise noise = PerlinNoise(3, 10, 0.35f);
-  std::vector<Colour> colors = { 
+
+  // for (int x = 0; x < 10; x++) {
+  //   for (int y = 0; y < 10; y++) {
+  //       std::cout << "x: " << x << "y: " << y << std::endl;
+  //       // std::cout << "interpolatedNoise " << noise.getInterpolatedNoise(x, y) << std::endl;
+  //       // std::cout << "Noise " << noise.getNoise(x, y) << std::endl;
+  //       std::cout << "PerlinNoise " << noise.getPerlinNoise(x, y) << std::endl;
+  //       // std::cout << "SmoothNoise " << noise.getSmoothNoise(x, y) << std::endl;
+  //   }
+  // }
+  std::vector<ofFloatColor> colors = { 
     { 201, 178, 99, 1 },
 	{ 135, 184, 82, 1 }, 
     { 80, 171, 93, 1 }, 
@@ -55,6 +67,8 @@ void ofApp::setup() {
 	{ 200, 200, 210, 1 } 
   };
   ColourGenerator colourGen = ColourGenerator(colors, 0.45f);
+  BaseTerrainGenerator terrainGenerator = BaseTerrainGenerator(noise, colourGen);
+  terrainGenerator.generateTerrain(100);
 }
 
 //--------------------------------------------------------------

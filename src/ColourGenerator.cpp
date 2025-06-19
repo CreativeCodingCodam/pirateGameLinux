@@ -3,29 +3,30 @@
 #include <cmath>
 #include <vector>
 
-std::vector<std::vector<Colour>> ColourGenerator::generateColours(std::vector<std::vector<float>> heights, float amplitude)
+std::vector<ofFloatColor> ColourGenerator::generateColours(std::vector<ofVec3f> vertices, float amplitude)
 {
-    std::vector<std::vector<Colour>> colours;
-    for (int z = 0; z < heights.size(); z++) 
-    {
-        for (int x = 0; x < heights[z].size() ; x++) 
+    std::vector<ofFloatColor> colours;
+    int gridSize = vertices.size();
+    for (int x = 0; x < gridSize; x++) 
+   {
+        for (int y = 0; y < gridSize; y++) 
         {
-            colours[z][x] = calculateColour(heights[z][x], amplitude);
+            colours.push_back(calculateColour(vertices[x + y].z, amplitude));
         }
     }
     return (colours);
 }
 
-Colour ColourGenerator::calculateColour(float height, float amplitude)
+ofFloatColor ColourGenerator::calculateColour(float height, float amplitude)
 {
     float value = (height * amplitude) / (amplitude * 2);
     value = std::clamp((value - halfSpread) * (1.0f / spread), 0.0f, 0.9999f);
     int firstBiome = std::floor(value / part);
     float blend = (value - (firstBiome * part)) / part;
-    return (Colour::interpolateColours(biomeColours[firstBiome], biomeColours[firstBiome + 1], blend));
+    return (biomeColours[firstBiome].lerp(biomeColours[firstBiome + 1], blend));
 }
 
-ColourGenerator::ColourGenerator(std::vector<Colour> biomeColours, float spread)
+ColourGenerator::ColourGenerator(std::vector<ofFloatColor> biomeColours, float spread)
 :  spread(spread), halfSpread(spread / 2), part(1.0f / (biomeColours.size() - 1)), biomeColours(biomeColours)
 {
 }
