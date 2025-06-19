@@ -14,7 +14,7 @@ public:
     int getVertexCount();
     ofVbo getVbo();
     void render(ofCamera camera, ofLight light);
-    Terrain(ofVbo vbo, int vertexCount, TerrainRenderer renderer);
+    Terrain(ofVbo vbo, int vertexCount, TerrainRenderer *renderer);
 private:
     ofVbo vbo;
     int vertexCount;

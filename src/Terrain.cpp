@@ -11,7 +11,7 @@ ofVbo Terrain::getVbo()
     return (vbo);
 }
 
-Terrain::Terrain(ofVbo vbo, int vertexCount)
-: vbo(vbo), vertexCount(vertexCount)
+Terrain::Terrain(ofVbo vbo, int vertexCount, TerrainRenderer *renderer)
+: vbo(vbo), vertexCount(vertexCount), renderer(renderer)
 {
 }
