@@ -1,4 +1,6 @@
 #include "ofApp.h"
+#include "ColourGenerator.h"
+#include "PerlinNoise.h"
 #include "fwd.hpp"
 #include "ofAppRunner.h"
 #include "ofLight.h"
@@ -43,6 +45,16 @@ void ofApp::setup() {
   cam.setFarClip(10000);
 
   gameState = start;
+
+  PerlinNoise noise = PerlinNoise(3, 10, 0.35f);
+  std::vector<Colour> colors = { 
+    { 201, 178, 99, 1 },
+	{ 135, 184, 82, 1 }, 
+    { 80, 171, 93, 1 }, 
+    { 120, 120, 120, 1 },
+	{ 200, 200, 210, 1 } 
+  };
+  ColourGenerator colourGen = ColourGenerator(colors, 0.45f);
 }
 
 //--------------------------------------------------------------
