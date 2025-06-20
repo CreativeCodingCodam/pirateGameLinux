@@ -27,19 +27,20 @@ void ofApp::setup() {
   roadMaterial.setShininess(0.01);
   ofBackground(99, 187, 204);
 
-  PerlinNoise noise = PerlinNoise(1, 5, 500, 0.10f);
+  PerlinNoise noise = PerlinNoise(1, 5, 10000, 0.10f);
 
   int width = 100, height = 100;
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
-      mesh.addVertex(ofPoint(x * 5, y * 5, ofMap(noise.getPerlinNoise(x, y), 100, 600, -150, 350, false)));
+      mesh.addVertex(ofPoint(x * 200, y * 200, noise.getPerlinNoise(x, y)));
       mesh.addColor(ofFloatColor(ofNoise(x,y), ofNoise(y,x), ofNoise(x,x)));
+      std::cout << noise.getPerlinNoise(x, y) << std::endl;
     }
   }
 
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
-      waterMesh.addVertex(ofPoint(x * 5, y * 5, 0));
+      waterMesh.addVertex(ofPoint(x * 200, y * 200, 0));
       waterMesh.addColor(ofFloatColor(0,0,0));
     }
   }
@@ -65,11 +66,11 @@ void ofApp::setup() {
       waterMesh.addIndex(x + (y + 1) * width);       // 10
     }
   }
-  // Set our camera up in a nice location to view our awesome car
-  cam.setPosition(-150, 150, -800);
-  glm::vec3 point;
-  cam.lookAt(point, {0.0f,1.0f,0.0f});
-  cam.setFarClip(10000);
+    truck.setup();
+	//Set our camera up in a nice location to view our awesome car
+	cam.setPosition(-965, 586, -1084);
+	cam.lookAt(truck.getNode(), {0.f, 1.f, 0.f});
+	cam.setFarClip(10000);
 
   gameState = start;
 
@@ -101,7 +102,7 @@ void ofApp::update() {
 
   } else if (gameState == game) {
     player.update();
-
+    truck.update();
   } else if (gameState == ending) {
   }
 }
@@ -123,6 +124,8 @@ void ofApp::draw() {
     mesh.draw();
     // mesh.drawWireframe();
     ofPopMatrix();
+    // plane.draw();
+    truck.draw();
     // roadMaterial.begin();
     // plane.draw();
     // roadMaterial.end();

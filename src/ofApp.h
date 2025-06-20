@@ -2,6 +2,7 @@
 #define OFAPP_H
 
 #include "BaseTerrainGenerator.h"
+#include "Truck.h"
 #include "Player.h"
 #include "TerrainGenerator.h"
 #include "of3dPrimitives.h"
@@ -39,6 +40,7 @@ public:
 
   int gameState;
   Player player;
+  Truck truck;
 
   ofMesh mesh;
   ofMesh waterMesh;
