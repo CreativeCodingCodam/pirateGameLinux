@@ -9,6 +9,7 @@
 #include "ofGraphics.h"
 #include "ofLight.h"
 #include "ofMath.h"
+#include "ofPoint.h"
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -31,15 +32,14 @@ void ofApp::setup() {
   int width = 100, height = 100;
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
-      mesh.addVertex(ofPoint(x * 5, y * 5, noise.getPerlinNoise(x, y)));
+      mesh.addVertex(ofPoint(x * 5, y * 5, ofMap(noise.getPerlinNoise(x, y), 100, 600, -150, 350, false)));
       mesh.addColor(ofFloatColor(ofNoise(x,y), ofNoise(y,x), ofNoise(x,x)));
-      std::cout << "noise value:" << noise.getPerlinNoise(x, y) << std::endl;
     }
   }
 
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
-      waterMesh.addVertex(ofPoint(x * 5, y * 5, 300));
+      waterMesh.addVertex(ofPoint(x * 5, y * 5, 0));
       waterMesh.addColor(ofFloatColor(0,0,0));
     }
   }
@@ -117,7 +117,8 @@ void ofApp::draw() {
     cam.begin();
     ofPushMatrix();
     // terrainGenerator.render(terrain, cam, light);
-    ofRotate(240.0f, 1.0f, 1.0f, 1.0f);
+    ofRotateXDeg(90);
+    ofTranslate(ofPoint(-250, -250));
     waterMesh.drawWireframe();
     mesh.draw();
     // mesh.drawWireframe();
