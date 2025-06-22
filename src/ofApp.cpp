@@ -1,8 +1,8 @@
 #include "ofApp.h"
+#include "BaseTerrainGenerator.h"
 #include "ColourGenerator.h"
 #include "PerlinNoise.h"
 #include "TerrainGenerator.h"
-#include "BaseTerrainGenerator.h"
 #include "TerrainRenderer.h"
 #include "fwd.hpp"
 #include "ofAppRunner.h"
@@ -27,13 +27,13 @@ void ofApp::setup() {
   roadMaterial.setShininess(0.01);
   ofBackground(99, 187, 204);
 
-  PerlinNoise noise = PerlinNoise(1, 5, 10000, 0.10f);
+  PerlinNoise noise = PerlinNoise(1, 5, 5000, 0.10f);
 
   int width = 100, height = 100;
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
       mesh.addVertex(ofPoint(x * 200, y * 200, noise.getPerlinNoise(x, y)));
-      mesh.addColor(ofFloatColor(ofNoise(x,y), ofNoise(y,x), ofNoise(x,x)));
+      mesh.addColor(ofFloatColor(ofNoise(x, y), ofNoise(y, x), ofNoise(x, x)));
       std::cout << noise.getPerlinNoise(x, y) << std::endl;
     }
   }
@@ -41,7 +41,7 @@ void ofApp::setup() {
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
       waterMesh.addVertex(ofPoint(x * 200, y * 200, 0));
-      waterMesh.addColor(ofFloatColor(0,0,0));
+      waterMesh.addColor(ofFloatColor(0, 0, 0));
     }
   }
   for (int y = 0; y < height - 1; y++) {
@@ -66,31 +66,31 @@ void ofApp::setup() {
       waterMesh.addIndex(x + (y + 1) * width);       // 10
     }
   }
-    truck.setup();
-	//Set our camera up in a nice location to view our awesome car
-	cam.setPosition(-965, 586, -1084);
-	cam.lookAt(truck.getNode(), {0.f, 1.f, 0.f});
-	cam.setFarClip(10000);
+  truck.setup();
+  // Set our camera up in a nice location to view our awesome car
+  cam.setPosition(-965, 586, -1084);
+  cam.lookAt(truck.getNode(), {0.f, 1.f, 0.f});
+  cam.setFarClip(10000);
 
   gameState = start;
-
 
   // for (int x = 0; x < 10; x++) {
   //   for (int y = 0; y < 10; y++) {
   //       std::cout << "x: " << x << "y: " << y << std::endl;
-  //       // std::cout << "interpolatedNoise " << noise.getInterpolatedNoise(x, y) << std::endl;
+  //       // std::cout << "interpolatedNoise " << noise.getInterpolatedNoise(x,
+  //       y) << std::endl;
   //       // std::cout << "Noise " << noise.getNoise(x, y) << std::endl;
-  //       std::cout << "PerlinNoise " << noise.getPerlinNoise(x, y) << std::endl;
-  //       // std::cout << "SmoothNoise " << noise.getSmoothNoise(x, y) << std::endl;
+  //       std::cout << "PerlinNoise " << noise.getPerlinNoise(x, y) <<
+  //       std::endl;
+  //       // std::cout << "SmoothNoise " << noise.getSmoothNoise(x, y) <<
+  //       std::endl;
   //   }
   // }
-  std::vector<ofFloatColor> colors = { 
-    { 201, 178, 99, 1 },
-	{ 135, 184, 82, 1 }, 
-    { 80, 171, 93, 1 }, 
-    { 120, 120, 120, 1 },
-	{ 200, 200, 210, 1 } 
-  };
+  std::vector<ofFloatColor> colors = {{201, 178, 99, 1},
+                                      {135, 184, 82, 1},
+                                      {80, 171, 93, 1},
+                                      {120, 120, 120, 1},
+                                      {200, 200, 210, 1}};
   // ColourGenerator colourGen = ColourGenerator(colors, 0.45f);
   // terrainGenerator = BaseTerrainGenerator(noise, colourGen);
   // terrain = terrainGenerator.generateTerrain(10);
@@ -103,6 +103,9 @@ void ofApp::update() {
   } else if (gameState == game) {
     player.update();
     truck.update();
+    glm::vec3 truckPosition = truck.getNode().getPosition();
+    cam.setPosition(truckPosition.x - 500, truckPosition.y + 750, truckPosition.z - 1500);
+    cam.lookAt(truck.getNode(), {0.f, 1.f, 0.f});
   } else if (gameState == ending) {
   }
 }
@@ -119,9 +122,10 @@ void ofApp::draw() {
     ofPushMatrix();
     // terrainGenerator.render(terrain, cam, light);
     ofRotateXDeg(90);
-    ofTranslate(ofPoint(-250, -250));
+    // ofTranslate(ofPoint(-250, -250));
     waterMesh.drawWireframe();
     mesh.draw();
+
     // mesh.drawWireframe();
     ofPopMatrix();
     // plane.draw();
