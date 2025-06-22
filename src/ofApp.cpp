@@ -27,12 +27,12 @@ void ofApp::setup() {
   roadMaterial.setShininess(0.01);
   ofBackground(99, 187, 204);
 
-  PerlinNoise noise = PerlinNoise(1, 5, 5000, 0.10f);
+  PerlinNoise noise = PerlinNoise(1, 5, 1, 0.10f);
 
   int width = 100, height = 100;
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
-      mesh.addVertex(ofPoint(x * 200, y * 200, noise.getPerlinNoise(x, y)));
+      mesh.addVertex(ofPoint(x * 200, y * 200, ofMap(noise.getPerlinNoise(x,y), 0, 1, -10000, 10000)));
       mesh.addColor(ofFloatColor(ofNoise(x, y), ofNoise(y, x), ofNoise(x, x)));
       std::cout << noise.getPerlinNoise(x, y) << std::endl;
     }
@@ -120,20 +120,11 @@ void ofApp::draw() {
     ofEnableDepthTest();
     cam.begin();
     ofPushMatrix();
-    // terrainGenerator.render(terrain, cam, light);
     ofRotateXDeg(90);
-    // ofTranslate(ofPoint(-250, -250));
     waterMesh.drawWireframe();
     mesh.draw();
-
-    // mesh.drawWireframe();
     ofPopMatrix();
-    // plane.draw();
     truck.draw();
-    // roadMaterial.begin();
-    // plane.draw();
-    // roadMaterial.end();
-    // player.draw();
     cam.end();
 
     ofDisableDepthTest();
