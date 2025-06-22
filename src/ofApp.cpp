@@ -10,6 +10,7 @@
 #include "ofLight.h"
 #include "ofMath.h"
 #include "ofPoint.h"
+#include "EndlessTerrain.h"
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -67,6 +68,7 @@ void ofApp::setup() {
     }
   }
   truck.setup();
+  endlessTerrain.Start(10);
   // Set our camera up in a nice location to view our awesome car
   cam.setPosition(-965, 586, -1084);
   cam.lookAt(truck.getNode(), {0.f, 1.f, 0.f});
@@ -101,7 +103,7 @@ void ofApp::update() {
   if (gameState == start) {
 
   } else if (gameState == game) {
-    player.update();
+    // player.update();
     truck.update();
     glm::vec3 truckPosition = truck.getNode().getPosition();
     cam.setPosition(truckPosition.x - 500, truckPosition.y + 750, truckPosition.z - 1500);
@@ -121,8 +123,10 @@ void ofApp::draw() {
     cam.begin();
     ofPushMatrix();
     ofRotateXDeg(90);
-    waterMesh.drawWireframe();
-    mesh.draw();
+    endlessTerrain.update(truck.getNode().getPosition());
+    ofDrawGrid(50,10,true,true,true,true);
+    // waterMesh.drawWireframe();
+    // mesh.draw();
     ofPopMatrix();
     truck.draw();
     cam.end();

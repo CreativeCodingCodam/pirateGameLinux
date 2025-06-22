@@ -2,6 +2,7 @@
 #define OFAPP_H
 
 #include "BaseTerrainGenerator.h"
+#include "EndlessTerrain.h"
 #include "Truck.h"
 #include "Player.h"
 #include "TerrainGenerator.h"
@@ -50,6 +51,7 @@ public:
   ofEasyCam cam;
   ofMaterial roadMaterial;
   ofLight light;
+  EndlessTerrain endlessTerrain;
 };
 
 #endif
